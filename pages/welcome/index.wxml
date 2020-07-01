@@ -1,0 +1,6 @@
+<!-- index.wxml -->
+<view class="welcome">
+  <image src="/assets/images/logo.png" class="logo"></image>
+  <button open-type="getUserInfo" wx:if="{{!authorize}}" class="wx_button getUserInfo" bindgetuserinfo="callbackUser">授权</button>
+  <button bindtap="goLogin" class="wx_button goLogin">登录</button>
+</view>

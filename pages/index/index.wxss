@@ -1,1 +1,14 @@
 /**index.wxss**/
+.photoWrap {
+	padding: 20rpx;
+    box-sizing: border-box;
+	column-count: 2;
+	column-gap: 20rpx;
+}
+.photoWrap .photoItem {
+	break-inside: avoid-column;
+	padding-bottom: 20rpx;
+}
+.photoWrap .photo {
+    width: 100%;
+}

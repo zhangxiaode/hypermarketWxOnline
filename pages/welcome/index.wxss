@@ -1,0 +1,17 @@
+/**index.wxss**/
+.welcome {
+  background: #f2f2f2;
+  height: 100%;
+  overflow: hidden;
+}
+
+.logo {
+  display: block;
+  width: 200rpx;
+  height: 200rpx;
+  margin: 200rpx auto;
+}
+
+.getUserInfo {
+  margin-bottom: 50rpx;
+}

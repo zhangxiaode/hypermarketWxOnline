@@ -1,3 +1,8 @@
 <!-- index.wxml -->
-<view class="index">
-</view>
+<scroll-view scroll-y="{{true}}" style="height:{{windowHeight}}px" class="index">
+    <view class="photoWrap">
+        <view class="photoItem" wx:for="{{photoList}}" wx:key="index">
+            <image class="photo" src="{{item.path}}" mode="widthFix" />
+        </view>
+    </view>
+</scroll-view>

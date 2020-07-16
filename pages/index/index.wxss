@@ -20,12 +20,8 @@
 .categoryScroll .categoryItem.actived{
 	color: #ed772f;
 }
-.photoScroll{
-    box-sizing: border-box;
-	padding-top: 100rpx;
-}
 .photoWrap {
-	padding: 20rpx;
+	padding: 100rpx 20rpx 20rpx;
     box-sizing: border-box;
 	column-count: 2;
 	column-gap: 20rpx;

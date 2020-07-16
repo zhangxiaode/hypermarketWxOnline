@@ -42,6 +42,7 @@ Page({
     photoList: [
     ],
     pathList: [],
+    loading: false,
     noMore: false
   },
   onLoad() {
@@ -57,9 +58,11 @@ Page({
   },
   onPullDownRefresh() {
     // 下拉刷新操作
-    setTimeout(() => {
-      wx.stopPullDownRefresh();
-    }, 100)
+    this.setData({
+      current: 1,
+      noMore: false
+    })
+    this.getList()
   },
   onReachBottom() {
     // 上拉加载操作
@@ -71,12 +74,16 @@ Page({
   changeCategory(e) {
     this.setData({
       current: 1,
+      noMore: false,
       type: e.currentTarget.dataset.type
     })
     this.getList();
   },
   getList() {
     if(!this.data.noMore) {
+      this.setData({
+        loading: true
+      })
       request({
         url: `/apis/photo`,
         method: "get",
@@ -104,6 +111,12 @@ Page({
               noMore: false
             })
           }
+          if(this.data.current == 1) {
+            wx.stopPullDownRefresh()
+          }
+          this.setData({
+            loading: false
+          })
         }
       })
     }

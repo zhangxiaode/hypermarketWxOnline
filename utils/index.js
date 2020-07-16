@@ -1,5 +1,6 @@
-const baseUrl = 'http://localhost:9090'
+// const baseUrl = 'http://localhost:9090'
 // const baseUrl = 'http://47.244.20.27:9090'
+const baseUrl = 'https://www.zxdkk.com'
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1

@@ -1,8 +1,16 @@
 <!-- index.wxml -->
-<scroll-view scroll-y="{{true}}" style="height:{{windowHeight}}px" class="index">
-    <view class="photoWrap">
-        <view class="photoItem" wx:for="{{photoList}}" wx:key="index">
-            <image class="photo" src="{{item.path}}" mode="widthFix" />
+<view class="home">
+    <scroll-view class="categoryScroll" scroll-x>
+        <block wx:for="{{category}}" wx:key="index">
+            <view data-type="{{item.type}}" bindtap="changeCategory" class="categoryItem {{type == item.type ? 'actived' : ''}}">{{item.name}}</view>
+        </block>
+    </scroll-view>
+    <scroll-view scroll-y="{{true}}" style="height:{{windowHeight}}px" class="photoScroll">
+        <view class="photoWrap">
+            <view class="photoItem" wx:for="{{photoList}}" wx:key="index" data-path="{{item.path}}" bindtap = "handlePreview">
+                <image class="photo" src="{{item.path}}" mode="widthFix" />
+            </view>
         </view>
-    </view>
-</scroll-view>
+        <view class="noMore">没有更多了</view>
+    </scroll-view>
+</view>

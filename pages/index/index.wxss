@@ -1,9 +1,35 @@
 /**index.wxss**/
+.categoryScroll{
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	height: 80rpx;
+	white-space: nowrap;
+	padding: 10px 8rpx;
+	background: #fff;
+}
+.categoryScroll .categoryItem{
+	display: inline-block;
+	height: 80rpx;
+	line-height: 80rpx;
+	padding: 0 24rpx;
+	font-size: 28rpx;
+}
+.categoryScroll .categoryItem.actived{
+	color: #ed772f;
+}
+.photoScroll{
+    box-sizing: border-box;
+	padding-top: 100rpx;
+}
 .photoWrap {
 	padding: 20rpx;
     box-sizing: border-box;
 	column-count: 2;
 	column-gap: 20rpx;
+	margin-top: 20rpx;
 }
 .photoWrap .photoItem {
 	break-inside: avoid-column;
@@ -11,4 +37,10 @@
 }
 .photoWrap .photo {
     width: 100%;
+}
+.noMore{
+	color: #ccc;
+	font-size: 24rpx;
+	margin: 20rpx 0;
+	text-align: center;
 }

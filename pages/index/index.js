@@ -94,6 +94,10 @@ Page({
         }
       }).then(response => {
         if (response.code == 200) {
+          response.data.records = response.data.records.map(item => {
+            item.path = "https://www.zxdkk.com/photo" + item.path
+            return item
+          })
           var photoList = [...this.data.photoList,...response.data.records]
           if(this.data.current == 1) {
             photoList = response.data.records

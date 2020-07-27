@@ -41,6 +41,11 @@ Page({
     size: 10,
     photoList: [
     ],
+    photoListLeft: [],
+    photoListRight: [],
+    leftHeight: 0,
+    rightHeight: 0,
+    photoListRight: [],
     pathList: [],
     loading: false,
     noMore: false
@@ -66,10 +71,12 @@ Page({
   },
   onReachBottom() {
     // 上拉加载操作
-    this.setData({
-      current: this.data.current + 1
-    })
-    this.getList()
+    if(!this.data.loading && !this.data.noMore) {
+      this.setData({
+        current: this.data.current + 1
+      })
+      this.getList()
+    }
   },
   changeCategory(e) {
     this.setData({
@@ -79,12 +86,12 @@ Page({
     })
     this.getList();
   },
-  getList() {
+  async getList() {
     if(!this.data.noMore) {
       this.setData({
         loading: true
       })
-      request({
+      const { code, data } = await request({
         url: `/apis/photo`,
         method: "get",
         data: {
@@ -92,38 +99,82 @@ Page({
           current: this.data.current,
           type: this.data.type
         }
-      }).then(response => {
-        if (response.code == 200) {
-          response.data.records = response.data.records.map(item => {
-            item.path = "https://www.zxdkk.com/photo" + item.path
-            return item
+      })
+      if(this.data.current == 1) {
+        wx.stopPullDownRefresh()
+      }
+      if(data.records.length < this.data.size) {
+        this.setData({
+          noMore: true
+        })
+      } else {
+        this.setData({
+          noMore: false
+        })
+      }
+      if (code == 200) {
+        if(this.data.current == 1) {
+          this.setData({
+            photoListLeft: [],
+            photoListRight: [],
+            leftHeight: 0,
+            rightHeight: 0,
+            pathList: []
           })
-          var photoList = [...this.data.photoList,...response.data.records]
-          if(this.data.current == 1) {
-            photoList = response.data.records
-          }
-          if(response.data.records.length < this.size) {
-            this.setData({
-              photoList,
-              pathList: this.data.photoList.map(item => {return item.path}),
-              noMore: true
-            })
+        }
+        data.records = data.records.map(item => {
+          item.path = "https://www.zxdkk.com/photo" + item.path
+          item.preview = true
+          // item.realPath = "../../assets/images/logo.png"
+          return item
+        })
+        var photoListLeft = this.data.photoListLeft
+        var photoListRight = this.data.photoListRight
+        var leftHeight = this.data.leftHeight
+        var rightHeight = this.data.rightHeight
+        var pathList = this.data.pathList
+        Promise.all(data.records.map(async item=>{
+          let { height } = await wx.getImageInfo({ src: item.path })
+          if(leftHeight <= rightHeight) {
+            photoListLeft.push(item)
+            leftHeight += height
           } else {
-            this.setData({
-              photoList,
-              pathList: this.data.photoList.map(item => {return item.path}),
-              noMore: false
-            })
+            photoListRight.push(item)
+            rightHeight += height
           }
-          if(this.data.current == 1) {
-            wx.stopPullDownRefresh()
-          }
+          pathList.push(item.path)
+          this.setData({
+            photoListLeft,
+            photoListRight,
+            leftHeight,
+            rightHeight,
+            pathList
+          })
+        })).then(() => {
           this.setData({
             loading: false
           })
-        }
-      })
+        })
+      }
     }
+  },
+  handleLoad(e) {
+    var photoListLeft = this.data.photoListLeft.map(item => {
+      if(item.id == e.currentTarget.dataset.item.id) {
+        item.preview = false
+      }
+      return item
+    })
+    var photoListRight = this.data.photoListRight.map(item => {
+      if(item.id == e.currentTarget.dataset.item.id) {
+        item.preview = false
+      }
+      return item
+    })
+    this.setData({
+      photoListLeft,
+      photoListRight
+    })
   },
   handlePreview(e){
     wx.previewImage({

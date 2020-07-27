@@ -27,12 +27,18 @@
 	column-gap: 20rpx;
 	margin-top: 20rpx;
 }
-.photoWrap .photoItem {
+.photoWrap .photoColumn {
 	break-inside: avoid-column;
+}
+.photoColumn .photoItem {
 	padding-bottom: 20rpx;
 }
 .photoWrap .photo {
     width: 100%;
+}
+.photoWrap .photoLoading {
+    width: 60rpx;
+    height: 60rpx;
 }
 .noMore{
 	color: #ccc;

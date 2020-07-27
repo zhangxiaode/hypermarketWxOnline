@@ -1,15 +1,68 @@
 <!-- index.wxml -->
 <view class="home">
-    <scroll-view class="categoryScroll" scroll-x>
-        <block wx:for="{{category}}" wx:key="index">
-            <view data-type="{{item.type}}" bindtap="changeCategory" class="categoryItem {{type == item.type ? 'actived' : ''}}">{{item.name}}</view>
-        </block>
-    </scroll-view>
-    <view class="photoWrap">
-        <view class="photoItem" wx:for="{{photoList}}" wx:key="index" data-path="{{item.path}}" bindtap = "handlePreview">
-            <image class="photo" src="{{item.path}}" mode="widthFix" />
-        </view>
-    </view>
-    <view class="noMore" wx:if="{{loading}}">加载中...</view>
-    <view class="noMore" wx:if="{{noMore}}">没有更多了</view>
+	<scroll-view class="categoryScroll" scroll-x>
+		<block wx:for="{{category}}" wx:key="index">
+			<view
+			 data-type="{{item.type}}"
+			 bindtap="changeCategory"
+			 class="categoryItem {{type == item.type ? 'actived' : ''}}"
+			>{{item.name}}
+			</view>
+		</block>
+	</scroll-view>
+	<view class="photoWrap">
+		<view class="photoColumn">
+			<view
+			 class="photoItem"
+			 wx:for="{{photoListLeft}}"
+			 wx:key="index"
+			 data-path="{{item.path}}"
+			 bindtap="handlePreview"
+			>
+				<image
+				 hidden="{{!item.preview}}"
+				 class="photo photoLoading"
+				 src="../../assets/images/loading.gif"
+				 mode="widthFix"
+				/>
+				<image
+				 hidden="{{item.preview}}"
+				 class="photo"
+				 src="{{item.path}}"
+				 mode="widthFix"
+				 lazy-load
+				 data-item="{{item}}"
+				 bindload="handleLoad"
+				/>
+			</view>
+		</view>
+		<view class="photoColumn">
+			<view
+			 class="photoItem"
+			 wx:for="{{photoListRight}}"
+			 wx:key="index"
+			 data-path="{{item.path}}"
+			 bindtap="handlePreview"
+			>
+				<image
+				 hidden="{{!item.preview}}"
+				 class="photo photoLoading"
+				 src="../../assets/images/loading.gif"
+				 mode="widthFix"
+				/>
+				<image
+				 hidden="{{item.preview}}"
+				 class="photo"
+				 src="{{item.path}}"
+				 mode="widthFix"
+				 lazy-load
+				 data-item="{{item}}"
+				 bindload="handleLoad"
+				/>
+			</view>
+		</view>
+	</view>
+	<view class="noMore" wx:if="{{loading}}">加载中...</view>
+	<view class="noMore" wx:if="{{noMore}}">没有更多了</view>
 </view>
+
